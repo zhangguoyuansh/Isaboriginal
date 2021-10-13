@@ -1,0 +1,9 @@
+{
+  "name": "moment",
+  "integrations": {},
+  "type": "angular",
+  "proxies":[{
+    "path":"/api",
+    "proxyUrl":"https://yjm.teachingforchange.edu.au/recognize"
+  }]
+}
