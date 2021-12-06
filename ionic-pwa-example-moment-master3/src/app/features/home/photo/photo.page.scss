@@ -1,0 +1,54 @@
+:host {
+  --photo-radius: 32px;
+}
+
+ion-toolbar {
+  position: absolute;
+
+  --background: #00000025;
+}
+
+.swiper {
+  height: 100%;
+  width: 100%;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+app-image {
+  height: 40vh;
+  flex-shrink: 0;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0 0 var(--photo-radius) var(--photo-radius);
+  z-index: 99;
+}
+
+ion-list {
+  width: 100%;
+  overflow: auto;
+  margin-top: calc(-1 * var(--photo-radius));
+  padding-top: var(--photo-radius);
+
+  ion-item {
+    ion-label {
+      white-space: initial;
+    }
+  }
+}
+
+.map {
+  height: 100px;
+  animation: loading 2.5s ease-in-out alternate infinite;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}

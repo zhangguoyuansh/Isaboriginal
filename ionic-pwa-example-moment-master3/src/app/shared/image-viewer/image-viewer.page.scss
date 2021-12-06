@@ -1,0 +1,13 @@
+:host {
+  background: var(--ion-color-dark);
+}
+
+.dismiss {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+}
+
+pinch-zoom {
+  height: 100%;
+}

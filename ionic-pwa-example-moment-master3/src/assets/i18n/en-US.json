@@ -1,0 +1,48 @@
+{
+  "languages": "Languages",
+  "location": "Location",
+  "coordinates": "Coordinates",
+  "address": "Address",
+  "file": "File",
+  "hash": "Hash",
+  "mimeType": "MIME Type",
+  "version": "Version",
+  "settings": "Settings",
+  "help": "Help",
+  "issueReport": "Issue Report",
+  "nothingInAlbum": "Photograph and recognize",
+  "imageMetadata": "Image Metadata",
+  "userAgent": "User Agent",
+  "result": "Result",
+  "browser": "Browser",
+  "device": "Device",
+  "engine": "Engine",
+  "os": "OS",
+  "cpu": "CPU",
+  "noCameraFound": "No Camera Found",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "helpUsToImproveMoment": "Help Us to Improve Moment",
+  "sendAnonymousErrorReport": "Send Anonymous Error Report",
+  "deleteMoment": "Delete Moment",
+  ".theme": "Theme",
+  "theme": {
+    "system": "System Default",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "message": {
+    "copiedToClipboard": "Copied to clipboard.",
+    "emptyAlbum": "Start capturing your pictures.",
+    "storedLocally": "All data is locally stored only.",
+    "noCameraFound": "No camera can be found on your devices.",
+    "cameraPermissionDenied": "Camera permission is blocked by user. Please allow it to use this feature.",
+    "helpUsToImproveMoment": "IsAboriginal acknowledges the traditional custodians of the land on which we’re meeting and pays respect to Elders both past and present and extends that respect to all Aboriginal and Torres Strait Islander people.",
+    "iAgree": "I agree",
+    "deleteMoment": "Are you sure to delete this picture? This action cannot be undone."
+  },
+  "error": {
+    "UnknownError": "Unknown Error",
+    "NotAllowedError": "Permission Denied"
+  }
+}

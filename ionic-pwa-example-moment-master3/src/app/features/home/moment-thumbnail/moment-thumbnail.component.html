@@ -1,0 +1,11 @@
+<ng-container *ngrxLet="moment$ as moment">
+  <app-image
+    *ngrxLet="moment.thumbnailUrl$ as thumbnailUrl"
+    routerLink="photo"
+    [queryParams]="{ id: moment.id }"
+    [src]="thumbnailUrl"
+    class="ion-activatable"
+  >
+    <ion-ripple-effect></ion-ripple-effect>
+  </app-image>
+</ng-container>

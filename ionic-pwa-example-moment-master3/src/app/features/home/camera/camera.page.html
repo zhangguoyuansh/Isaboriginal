@@ -1,0 +1,47 @@
+<app-back-button
+  color="light"
+  fill="clear"
+  [standalone]="true"
+  class="dismiss"
+></app-back-button>
+<ng-container *ngIf="(videoDevices$ | ngrxPush)?.length !== 0; else noCamera">
+  <ion-button (click)="capture()" class="capture" fill="clear">
+    <ion-icon
+      slot="icon-only"
+      name="radio-button-on-outline"
+      color="light"
+    ></ion-icon>
+  </ion-button>
+  <ion-button
+    *ngIf="(videoDevices$ | ngrxPush)?.length > 1"
+    (click)="reverseCamera()"
+    class="capture"
+    class="reverse-camera"
+    fill="clear"
+  >
+    <ion-icon
+      slot="icon-only"
+      name="camera-reverse-outline"
+      color="light"
+    ></ion-icon>
+  </ion-button>
+  <div
+    *ngrxLet="capturedImageUrl$ as capturedImageUrl"
+    class="captured ion-margin"
+  >
+    <app-image
+      [routerLink]="['/image-viewer', capturedImageUrl]"
+      [src]="capturedImageUrl"
+    ></app-image>
+  </div>
+  <video #video playsinline autoplay muted></video>
+</ng-container>
+<ng-template #noCamera>
+  <div class="no-camera">
+    <div *transloco="let t" class="no-camera-illustration">
+      <ion-img src="./assets/icons/undraw-void.svg"></ion-img>
+      <h3>{{ t('noCameraFound') }}</h3>
+      <p>{{ t('message.noCameraFound') }}</p>
+    </div>
+  </div>
+</ng-template>

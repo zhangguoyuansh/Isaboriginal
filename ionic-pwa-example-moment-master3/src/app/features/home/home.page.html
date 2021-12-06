@@ -1,0 +1,37 @@
+<ion-content scrollEvents (ionScroll)="onScroll($event)">
+  <ion-grid>
+    <ion-row>
+      <ion-col
+        #col
+        *ngFor="let moment of moments$ | ngrxPush; trackBy: trackMoment"
+        size="6"
+        size-sm="4"
+        size-md="3"
+        size-lg="2"
+      >
+        <app-moment-thumbnail [moment]="moment"></app-moment-thumbnail>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div *ngIf="(moments$ | ngrxPush)?.length === 0" class="empty-illustration">
+    <ion-img src="./assets/icons/undraw-blank-canvas.svg"></ion-img>
+    <h3 *transloco="let t">{{ t('nothingInAlbum') }}</h3>
+    <p *transloco="let t">
+      {{ t('message.emptyAlbum') + '\n' + t('message.storedLocally') }}
+    </p>
+  </div>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" edge>
+    <ion-fab-button routerLink="camera">
+      <ion-icon name="camera-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+<ion-footer [class.ion-no-border]="noFooterBorder$ | ngrxPush">
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="settings" slot="primary">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

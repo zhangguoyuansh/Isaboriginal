@@ -1,0 +1,76 @@
+<ion-header *transloco="let t" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <app-back-button></app-back-button>
+    </ion-buttons>
+    <ion-title>{{ t('settings') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="list-container">
+    <ion-card>
+      <ion-list *transloco="let t" lines="none">
+        <ion-item>
+          <ion-icon name="moon-outline" slot="start"></ion-icon>
+          <ion-label>{{ t('.theme') }}</ion-label>
+          <ion-select
+            *ngrxLet="theme$ as theme"
+            [value]="theme"
+            (ionChange)="onChangeTheme($event)"
+          >
+            <ion-select-option *ngFor="let theme of themes" [value]="theme">
+              {{ t('theme.' + theme) }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="language-outline" slot="start"></ion-icon>
+          <ion-label>{{ t('languages') }}</ion-label>
+          <ion-select
+            *ngrxLet="language$ as language"
+            [value]="language"
+            (ionChange)="onChangeLanguage($event)"
+          >
+            <ion-select-option
+              *ngFor="let language of languages | keyvalue"
+              [value]="language.key"
+            >
+              {{ language.value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="warning-outline" slot="start"></ion-icon>
+          <ion-label>{{ t('sendAnonymousErrorReport') }}</ion-label>
+          <ion-toggle
+            [checked]="errorReportEnabled$ | ngrxPush"
+            (ionChange)="onChangeErrorReportEnabled($event)"
+            slot="end"
+          ></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="information-outline" slot="start"></ion-icon>
+          <ion-label>{{ t('version') }}</ion-label>
+          <ion-note slot="end">{{ version }}</ion-note>
+        </ion-item>
+        <ion-item
+          href="https://github.com/seanwu1105/ionic-pwa-example-moment/discussions"
+          target="_blank"
+        >
+          <ion-icon name="help-outline" slot="start"></ion-icon>
+          <ion-label>{{ t('help') }}</ion-label>
+          <ion-icon name="logo-github" slot="end"></ion-icon>
+        </ion-item>
+        <ion-item
+          href="https://github.com/seanwu1105/ionic-pwa-example-moment/issues"
+          target="_blank"
+        >
+          <ion-icon name="bug-outline" slot="start"></ion-icon>
+          <ion-label>{{ t('issueReport') }}</ion-label>
+          <ion-icon name="logo-github" slot="end"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
+</ion-content>

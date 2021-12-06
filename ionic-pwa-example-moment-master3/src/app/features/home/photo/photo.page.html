@@ -1,0 +1,339 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <app-back-button color="light"></app-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="remove()" slot="primary" color="light">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button
+        *ngrxLet="currentMoment$ as currentMoment"
+        [href]="currentMoment.photoUrl$ | ngrxPush"
+        target="_blank"
+        [download]="
+          currentMoment.id +
+          '.' +
+          (currentMoment.mimeType$ | ngrxPush | extension)
+        "
+        slot="secondary"
+        color="light"
+      >
+        <ion-icon name="download-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button
+        *ngIf="supportShare"
+        (click)="share()"
+        slot="secondary"
+        color="light"
+      >
+        <ion-icon name="share-social-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen *ngrxLet="moments$ as moments">
+  <swiper
+    *ngrxLet="initialSlide$ as initialSlide"
+    [virtual]="true"
+    [resizeObserver]="true"
+    [observeParents]="true"
+    [observeSlideChildren]="true"
+    [resistanceRatio]="0"
+    [initialSlide]="initialSlide"
+    (swiper)="onSwiperCreated($event)"
+    (slideChange)="onPhotoSlidesChanged()"
+    class="swiper"
+  >
+    <ng-template
+      swiperSlide
+      *ngFor="let moment of moments; trackBy: trackMoment"
+    >
+      <div class="slide" *transloco="let t">
+        <app-image
+          *ngrxLet="moment.photoUrl$ as photoUrl"
+          [routerLink]="['/image-viewer', photoUrl]"
+          [src]="photoUrl"
+        ></app-image>
+
+        <ion-list lines="none">
+          <ion-item>
+            <ion-label>
+              {{
+                moment.timestamp
+                  | translocoDate: { dateStyle: 'full', timeStyle: 'full' }
+              }}
+            </ion-label>
+          </ion-item>
+          <ion-item-group *ngIf="moment.geolocationPosition">
+            <ion-item-divider>
+              <ion-label>{{ t('location') }}</ion-label>
+            </ion-item-divider>
+            <div class="map">
+              <iframe
+                *ngIf="mapUrl$ | ngrxPush as mapUrl"
+                [src]="mapUrl"
+                frameborder="0"
+                loading="lazy"
+              ></iframe>
+            </div>
+            <ion-item>
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('coordinates') }}</h3>
+                <p>
+                  {{ moment.geolocationPosition?.latitude }}
+                  ,
+                  {{ moment.geolocationPosition?.longitude }}
+                </p>
+              </ion-label>
+              <app-copy-clipboard
+                [text]="
+                  moment.geolocationPosition?.latitude +
+                  ',' +
+                  moment.geolocationPosition?.longitude
+                "
+                slot="end"
+              ></app-copy-clipboard>
+            </ion-item>
+            <ion-item *ngrxLet="address$ as address">
+              <ion-icon name="home-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('address') }}</h3>
+                <p>{{ address }}</p>
+              </ion-label>
+              <app-copy-clipboard
+                [text]="address"
+                slot="end"
+              ></app-copy-clipboard>
+            </ion-item>
+          </ion-item-group>
+
+          <ion-item-group>
+            <ion-item-divider>
+              <ion-label>{{ t('file') }}</ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-icon name="code-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('hash') }}</h3>
+                <p>{{ moment.id }}</p>
+              </ion-label>
+              <app-copy-clipboard
+                [text]="moment.id"
+                slot="end"
+              ></app-copy-clipboard>
+            </ion-item>
+            <!-- <ion-item>
+              <ion-icon name="document-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('mimeType') }}</h3>
+                <p>{{ moment.mimeType$ | ngrxPush }}</p>
+              </ion-label>
+            </ion-item> -->
+          </ion-item-group>
+          <ion-item-group>
+            <ion-item-divider>
+              <ion-label>{{ t('result') }}</ion-label>
+            </ion-item-divider>
+            <!-- <ng-container>
+              <ion-item *ngFor="let prediction of moment.predictions">
+                <ion-icon
+                  name="information-circle-outline"
+                  slot="start"
+                ></ion-icon>
+                <ion-label>
+                  <p>probability：{{ prediction.probability }} </p>
+                  <p>tagId：{{ prediction.tagId }} </p>
+                  <p>tagName：{{ prediction.tagName }} </p>
+                  <p>place：{{ prediction.place }} </p>
+                  <p>usefulness：{{ prediction.usefulness }} </p>
+                </ion-label>
+              </ion-item>
+            </ng-container> -->
+
+
+            <ng-container>
+              <ion-item *ngFor="let prediction of moment.predictions">
+                <ion-icon
+                  name="information-circle-outline"
+                  slot="start"
+                ></ion-icon>
+                <ion-label>
+                  <h3>Name</h3>
+                  <p>
+                    {{ prediction.tagName }}
+                  </p>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngFor="let prediction of moment.predictions">
+                <ion-icon
+                  name="information-circle-outline"
+                  slot="start"
+                ></ion-icon>
+                <ion-label>
+                  <h3>TagId：</h3>
+                  <p>
+                    {{ prediction.tagId }}
+                  </p>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngFor="let prediction of moment.predictions">
+                <ion-icon
+                  name="information-circle-outline"
+                  slot="start"
+                ></ion-icon>
+                <ion-label>
+                  <h3>Probability</h3>
+                  <p>
+                    {{ prediction.probability }}
+                  </p>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngFor="let prediction of moment.predictions">
+                <ion-icon
+                  name="information-circle-outline"
+                  slot="start"
+                ></ion-icon>
+                <ion-label>
+                  <h3>Place</h3>
+                  <p>
+                    {{ prediction.place }}
+                  </p>
+                </ion-label>
+              </ion-item>
+
+              <ion-item *ngFor="let prediction of moment.predictions">
+                <ion-icon
+                  name="information-circle-outline"
+                  slot="start"
+                ></ion-icon>
+                <ion-label>
+                  <h3>Usefulness</h3>
+                  <p>
+                    {{ prediction.usefulness }}
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ng-container>
+
+           <!-- <ion-item >
+              <ion-icon name="browsers-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>tagName</h3>
+                <p>
+                  {{ prediction.tagName }}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item >
+              <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>probability</h3>
+                <p>
+                  {{ prediction.probability }}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item >
+              <ion-icon name="flame-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>tagId</h3>
+                <p>
+                  {{ prediction.tagId }}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item >
+              <ion-icon name="laptop-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>place</h3>
+                <p>
+                  {{ prediction.place }}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item >
+              <ion-icon name="hardware-chip-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>usefulness</h3>
+                <p>
+                  {{ prediction.usefulness }}
+                </p>
+              </ion-label>
+            </ion-item> -->
+
+            
+            <!-- <ion-item *ngIf="moment.userAgent.browser.name">
+              <ion-icon name="browsers-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('browser') }}</h3>
+                <p>
+                  {{ moment.userAgent.browser.name }}
+                  {{ moment.userAgent.browser.version }}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="moment.userAgent.device.vendor">
+              <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('device') }}</h3>
+                <p>
+                  {{ moment.userAgent.device.vendor }}
+                  {{ moment.userAgent.device.model }}
+                  {{ moment.userAgent.device.type }}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="moment.userAgent.engine.name">
+              <ion-icon name="flame-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('engine') }}</h3>
+                <p>
+                  {{ moment.userAgent.engine.name }}
+                  {{ moment.userAgent.engine.version }}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="moment.userAgent.os.name">
+              <ion-icon name="laptop-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('os') }}</h3>
+                <p>
+                  {{ moment.userAgent.os.name }}
+                  {{ moment.userAgent.os.version }}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="moment.userAgent.cpu.architecture">
+              <ion-icon name="hardware-chip-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ t('cpu') }}</h3>
+                <p>
+                  {{ moment.userAgent.cpu.architecture }}
+                </p>
+              </ion-label>
+            </ion-item> -->
+          </ion-item-group>
+          <!-- <ion-item-group>
+            <ion-item-divider>
+              <ion-label>{{ t('imageMetadata') }}</ion-label>
+            </ion-item-divider>
+            <ng-container *ngrxLet="photoTags$ as photoTags">
+              <ion-item *ngFor="let tag of photoTags | keyvalue">
+                <ion-icon
+                  name="information-circle-outline"
+                  slot="start"
+                ></ion-icon>
+                <ion-label>
+                  <h3>{{ tag.key }}</h3>
+                  <p>{{ tag.value.description }} ({{ tag.value.value }})</p>
+                </ion-label>
+              </ion-item>
+            </ng-container>
+          </ion-item-group> -->
+        </ion-list>
+      </div>
+    </ng-template>
+  </swiper>
+</ion-content>

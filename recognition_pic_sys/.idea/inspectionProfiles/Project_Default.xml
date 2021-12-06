@@ -1,0 +1,67 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="43">
+            <item index="0" class="java.lang.String" itemvalue="Flask-Migrate" />
+            <item index="1" class="java.lang.String" itemvalue="Werkzeug" />
+            <item index="2" class="java.lang.String" itemvalue="itsdangerous" />
+            <item index="3" class="java.lang.String" itemvalue="click" />
+            <item index="4" class="java.lang.String" itemvalue="Jinja2" />
+            <item index="5" class="java.lang.String" itemvalue="Flask" />
+            <item index="6" class="java.lang.String" itemvalue="varint" />
+            <item index="7" class="java.lang.String" itemvalue="lru-dict" />
+            <item index="8" class="java.lang.String" itemvalue="protobuf" />
+            <item index="9" class="java.lang.String" itemvalue="hexbytes" />
+            <item index="10" class="java.lang.String" itemvalue="MarkupSafe" />
+            <item index="11" class="java.lang.String" itemvalue="requests" />
+            <item index="12" class="java.lang.String" itemvalue="bitarray" />
+            <item index="13" class="java.lang.String" itemvalue="importlib-metadata" />
+            <item index="14" class="java.lang.String" itemvalue="eth-account" />
+            <item index="15" class="java.lang.String" itemvalue="eth-hash" />
+            <item index="16" class="java.lang.String" itemvalue="pyrsistent" />
+            <item index="17" class="java.lang.String" itemvalue="eth-rlp" />
+            <item index="18" class="java.lang.String" itemvalue="eth-typing" />
+            <item index="19" class="java.lang.String" itemvalue="zipp" />
+            <item index="20" class="java.lang.String" itemvalue="certifi" />
+            <item index="21" class="java.lang.String" itemvalue="netaddr" />
+            <item index="22" class="java.lang.String" itemvalue="urllib3" />
+            <item index="23" class="java.lang.String" itemvalue="jsonschema" />
+            <item index="24" class="java.lang.String" itemvalue="websockets" />
+            <item index="25" class="java.lang.String" itemvalue="eth-abi" />
+            <item index="26" class="java.lang.String" itemvalue="six" />
+            <item index="27" class="java.lang.String" itemvalue="eth-keys" />
+            <item index="28" class="java.lang.String" itemvalue="parsimonious" />
+            <item index="29" class="java.lang.String" itemvalue="web3" />
+            <item index="30" class="java.lang.String" itemvalue="typing-extensions" />
+            <item index="31" class="java.lang.String" itemvalue="attrs" />
+            <item index="32" class="java.lang.String" itemvalue="chardet" />
+            <item index="33" class="java.lang.String" itemvalue="base58" />
+            <item index="34" class="java.lang.String" itemvalue="toolz" />
+            <item index="35" class="java.lang.String" itemvalue="cytoolz" />
+            <item index="36" class="java.lang.String" itemvalue="eth-keyfile" />
+            <item index="37" class="java.lang.String" itemvalue="rlp" />
+            <item index="38" class="java.lang.String" itemvalue="ipfshttpclient" />
+            <item index="39" class="java.lang.String" itemvalue="pycryptodome" />
+            <item index="40" class="java.lang.String" itemvalue="eth-utils" />
+            <item index="41" class="java.lang.String" itemvalue="idna" />
+            <item index="42" class="java.lang.String" itemvalue="multiaddr" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="app.Manager" />
+          <option value="apps.users.models.db" />
+          <option value="apps.users.views.User" />
+          <option value="test.test_selenium.wait" />
+          <option value="flask_script.MigrateCommand" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
